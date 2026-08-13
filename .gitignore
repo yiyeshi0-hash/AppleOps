@@ -4,3 +4,4 @@ build/
 *.ipa
 *.xcuserstate
 xcuserdata/
+repo-payload.json
