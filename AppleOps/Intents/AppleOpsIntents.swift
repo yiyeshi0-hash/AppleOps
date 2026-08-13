@@ -177,7 +177,7 @@ struct OpenToolsScreenIntent: OpenIntent {
 @AppIntent(schema: .system.search)
 struct SearchToolsIntent: ShowInAppSearchResultsIntent {
     static var title: LocalizedStringResource { "Search Tools" }
-    static var searchScopes: [StringSearchScope] = [.general]
+    nonisolated static let searchScopes: [StringSearchScope] = [.general]
 
     @Parameter(title: "Criteria")
     var criteria: StringSearchCriteria
