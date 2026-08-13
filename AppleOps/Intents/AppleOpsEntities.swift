@@ -2,8 +2,8 @@ import AppIntents
 import SwiftUI
 
 struct BuildRunEntity: AppEntity {
-    static var typeDisplayRepresentation: TypeDisplayRepresentation = "构建"
-    static var defaultQuery = BuildRunEntityQuery()
+    nonisolated static let typeDisplayRepresentation: TypeDisplayRepresentation = "构建"
+    nonisolated static let defaultQuery = BuildRunEntityQuery()
 
     var id: String
     var title: String
