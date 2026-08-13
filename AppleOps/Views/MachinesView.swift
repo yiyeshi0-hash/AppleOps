@@ -80,6 +80,7 @@ struct MachinesView: View {
         }
         do {
             output = try await MachineAgentClient(baseURL: machine.baseURL).run(command: command)
+            UserDefaults.standard.set(command, forKey: "PresetCommand")
             command = ""
         } catch {
             errorMessage = error.localizedDescription
