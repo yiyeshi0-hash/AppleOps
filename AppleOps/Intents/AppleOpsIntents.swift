@@ -70,7 +70,7 @@ struct ReadVerificationCodeIntent: AppIntent {
         let image = try await client.screenshot()
         let texts = try client.recognizedText(in: image)
         let codes = client.verificationCodes(from: texts)
-        return .result(dialog: IntentDialog(codes.isEmpty ? "No code" : codes.joined(separator: ", ")))
+        return .result(dialog: IntentDialog(stringLiteral: codes.isEmpty ? "No code" : codes.joined(separator: ", ")))
     }
 }
 
@@ -83,7 +83,7 @@ struct CheckMachineStatusIntent: AppIntent {
 
     func perform() async throws -> some IntentResult & ProvidesDialog {
         let status = try await MachineAgentClient(baseURL: machineURL).status()
-        return .result(dialog: IntentDialog(status))
+        return .result(dialog: IntentDialog(stringLiteral: status))
     }
 }
 
@@ -98,7 +98,7 @@ struct RunMachineCommandIntent: AppIntent {
 
     func perform() async throws -> some IntentResult & ProvidesDialog {
         let output = try await MachineAgentClient(baseURL: machineURL).run(command: command)
-        return .result(dialog: IntentDialog(output))
+        return .result(dialog: IntentDialog(stringLiteral: output))
     }
 }
 
@@ -121,7 +121,7 @@ struct CheckSigningStatusIntent: AppIntent {
         let agent = UserDefaults.standard.string(forKey: "AgentBaseURL") ?? "http://192.168.3.234:18081"
         let info = try await SigningAgentClient(baseURL: agent).listInfo()
         let summary = info.map { "\($0.name): \($0.detail)" }.joined(separator: ", ")
-        return .result(dialog: IntentDialog(summary.isEmpty ? "No signing info" : summary))
+        return .result(dialog: IntentDialog(stringLiteral: summary.isEmpty ? "No signing info" : summary))
     }
 }
 
@@ -155,7 +155,7 @@ struct RunPresetCommandIntent: AppIntent {
            let machines = try? JSONDecoder().decode([MachineHost].self, from: data),
            let first = machines.first {
             let output = try await MachineAgentClient(baseURL: first.baseURL).run(command: command)
-        return .result(dialog: IntentDialog(output))
+        return .result(dialog: IntentDialog(stringLiteral: output))
         }
         return .result(dialog: "No machine configured")
     }
