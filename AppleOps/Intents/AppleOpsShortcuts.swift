@@ -86,3 +86,8 @@ struct AppleOpsShortcuts: AppShortcutsProvider {
         )
     }
 }
+
+extension Notification.Name {
+    static let openToolsScreen = Notification.Name("openToolsScreen")
+    static let searchTools = Notification.Name("searchTools")
+}
