@@ -11,7 +11,7 @@ targets:
       - AppleOps
     settings:
       base:
-        PRODUCT_BUNDLE_IDENTIFIER: com.roooot.mond
+        PRODUCT_BUNDLE_IDENTIFIER: com.roooot.mond.26C862CCQV
         PRODUCT_NAME: AppleOps
         SWIFT_VERSION: "6.0"
         GENERATE_INFOPLIST_FILE: YES
