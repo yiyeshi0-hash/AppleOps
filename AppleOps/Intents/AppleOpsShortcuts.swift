@@ -38,5 +38,33 @@ struct AppleOpsShortcuts: AppShortcutsProvider {
                 "用 \(.applicationName) 读取验证码"
             ]
         )
+        AppShortcut(
+            intent: PressHomeIntent(),
+            phrases: [
+                "让 \(.applicationName) 回到主屏",
+                "用 \(.applicationName) 按主屏键"
+            ]
+        )
+        AppShortcut(
+            intent: CheckSigningStatusIntent(),
+            phrases: [
+                "查看 \(.applicationName) 签名状态",
+                "检查 \(.applicationName) 签名和设备"
+            ]
+        )
+        AppShortcut(
+            intent: CheckFirstMachineStatusIntent(),
+            phrases: [
+                "查看 \(.applicationName) 默认机器状态",
+                "检查 \(.applicationName) 第一台机器"
+            ]
+        )
+        AppShortcut(
+            intent: RunPresetCommandIntent(),
+            phrases: [
+                "运行 \(.applicationName) 预设命令",
+                "执行 \(.applicationName) 预设命令"
+            ]
+        )
     }
 }
