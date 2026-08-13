@@ -101,3 +101,62 @@ struct RunMachineCommandIntent: AppIntent {
         return .result(value: output)
     }
 }
+
+struct PressHomeIntent: AppIntent {
+    static var title: LocalizedStringResource { "Press Home" }
+    static var description: IntentDescription { "Send the WDA home-screen command." }
+
+    func perform() async throws -> some IntentResult {
+        let base = UserDefaults.standard.string(forKey: "WDABaseURL") ?? "http://127.0.0.1:8100"
+        try await WDAClient(baseURL: base).home()
+        return .result(value: "Pressed home")
+    }
+}
+
+struct CheckSigningStatusIntent: AppIntent {
+    static var title: LocalizedStringResource { "Check Signing Status" }
+    static var description: IntentDescription { "Check Apple signing and device information through the configured agent." }
+
+    func perform() async throws -> some IntentResult {
+        let agent = UserDefaults.standard.string(forKey: "AgentBaseURL") ?? "http://192.168.3.234:18081"
+        let info = try await SigningAgentClient(baseURL: agent).listInfo()
+        let summary = info.map { "\($0.name): \($0.detail)" }.joined(separator: ", ")
+        return .result(value: summary.isEmpty ? "No signing info" : summary)
+    }
+}
+
+struct CheckFirstMachineStatusIntent: AppIntent {
+    static var title: LocalizedStringResource { "Check First Machine Status" }
+    static var description: IntentDescription { "Check the first configured machine agent status." }
+
+    func perform() async throws -> some IntentResult {
+        let defaults = UserDefaults.standard
+        if let data = defaults.data(forKey: "Machines"),
+           let machines = try? JSONDecoder().decode([MachineHost].self, from: data),
+           let first = machines.first {
+            let status = try await MachineAgentClient(baseURL: first.baseURL).status()
+            return .result(value: "\(first.name): \(status)")
+        }
+        return .result(value: "No machine configured")
+    }
+}
+
+struct RunPresetCommandIntent: AppIntent {
+    static var title: LocalizedStringResource { "Run Preset Command" }
+    static var description: IntentDescription { "Run the preset command on the first configured machine." }
+
+    func perform() async throws -> some IntentResult {
+        let defaults = UserDefaults.standard
+        let command = defaults.string(forKey: "PresetCommand") ?? ""
+        guard !command.isEmpty else {
+            return .result(value: "No preset command")
+        }
+        if let data = defaults.data(forKey: "Machines"),
+           let machines = try? JSONDecoder().decode([MachineHost].self, from: data),
+           let first = machines.first {
+            let output = try await MachineAgentClient(baseURL: first.baseURL).run(command: command)
+            return .result(value: output)
+        }
+        return .result(value: "No machine configured")
+    }
+}
