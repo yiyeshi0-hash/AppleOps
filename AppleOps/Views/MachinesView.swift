@@ -33,6 +33,7 @@ struct MachinesView: View {
                                 .font(.caption)
                                 .foregroundStyle(.secondary)
                         }
+                        .appleOpsMachineAnnotation(machine.id)
                         .swipeActions {
                             Button("删除", role: .destructive) {
                                 store.machines.removeAll { $0.id == machine.id }
