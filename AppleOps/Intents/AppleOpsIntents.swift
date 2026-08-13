@@ -161,8 +161,10 @@ struct RunPresetCommandIntent: AppIntent {
     }
 }
 
+@available(iOS 27.0, *)
 @AppIntent(schema: .system.open)
 struct OpenToolsScreenIntent: OpenIntent {
+    static var title: LocalizedStringResource { "Open Tools Screen" }
     var target: ToolsScreenEntity
 
     func perform() async throws -> some IntentResult {
@@ -171,17 +173,17 @@ struct OpenToolsScreenIntent: OpenIntent {
     }
 }
 
+@available(iOS 27.0, *)
 @AppIntent(schema: .system.search)
 struct SearchToolsIntent: ShowInAppSearchResultsIntent {
-    static var searchScopes: [String] {
-        ["Builds", "Machines"]
-    }
+    static var title: LocalizedStringResource { "Search Tools" }
+    static var searchScopes: [StringSearchScope] = [.general]
 
-    @Parameter(title: "Query")
-    var query: String
+    @Parameter(title: "Criteria")
+    var criteria: StringSearchCriteria
 
     func perform() async throws -> some IntentResult {
-        NotificationCenter.default.post(name: .searchTools, object: query)
+        NotificationCenter.default.post(name: .searchTools, object: criteria.term)
         return .result()
     }
 }
