@@ -7,63 +7,81 @@ struct AppleOpsShortcuts: AppShortcutsProvider {
             intent: TriggerLatestBuildIntent(),
             phrases: [
                 "触发 \(.applicationName) 最新构建",
-                "构建 \(.applicationName) 最新版本"
+                "构建 \(.applicationName) 最新版本",
+                "Trigger \(.applicationName) latest build",
+                "Build \(.applicationName) latest version"
             ]
         )
         AppShortcut(
             intent: CheckBuildStatusIntent(),
             phrases: [
                 "查看 \(.applicationName) 构建状态",
-                "检查 \(.applicationName) 构建"
+                "检查 \(.applicationName) 构建",
+                "Check \(.applicationName) build status",
+                "Check \(.applicationName) builds"
             ]
         )
         AppShortcut(
             intent: CheckWDAStatusIntent(),
             phrases: [
                 "查看 \(.applicationName) WDA 状态",
-                "检查 \(.applicationName) WDA"
+                "检查 \(.applicationName) WDA",
+                "Check \(.applicationName) WDA status",
+                "Check \(.applicationName) WDA"
             ]
         )
         AppShortcut(
             intent: CaptureScreenshotIntent(),
             phrases: [
                 "用 \(.applicationName) 截屏",
-                "让 \(.applicationName) 截图"
+                "让 \(.applicationName) 截图",
+                "Take a screenshot with \(.applicationName)",
+                "Use \(.applicationName) to screenshot"
             ]
         )
         AppShortcut(
             intent: ReadVerificationCodeIntent(),
             phrases: [
                 "读取 \(.applicationName) 验证码",
-                "用 \(.applicationName) 读取验证码"
+                "用 \(.applicationName) 读取验证码",
+                "Read \(.applicationName) verification code",
+                "Use \(.applicationName) to read verification code"
             ]
         )
         AppShortcut(
             intent: PressHomeIntent(),
             phrases: [
                 "让 \(.applicationName) 回到主屏",
-                "用 \(.applicationName) 按主屏键"
+                "用 \(.applicationName) 按主屏键",
+                "Go home in \(.applicationName)",
+                "Press home in \(.applicationName)"
             ]
         )
         AppShortcut(
             intent: CheckSigningStatusIntent(),
             phrases: [
                 "查看 \(.applicationName) 签名状态",
-                "检查 \(.applicationName) 签名和设备"
+                "检查 \(.applicationName) 签名和设备",
+                "Check \(.applicationName) signing status",
+                "Check \(.applicationName) signing and devices"
             ]
         )
         AppShortcut(
             intent: CheckFirstMachineStatusIntent(),
             phrases: [
                 "查看 \(.applicationName) 默认机器状态",
-                "检查 \(.applicationName) 第一台机器"
+                "检查 \(.applicationName) 第一台机器",
+                "Check \(.applicationName) default machine status",
+                "Check \(.applicationName) first machine"
             ]
         )
         AppShortcut(
             intent: RunPresetCommandIntent(),
             phrases: [
                 "运行 \(.applicationName) 预设命令",
-                "执行 \(.applicationName) 预设命令"
+                "执行 \(.applicationName) 预设命令",
+                "Run \(.applicationName) preset command",
+                "Execute \(.applicationName) preset command"
             ]
         )
     }
