@@ -160,3 +160,28 @@ struct RunPresetCommandIntent: AppIntent {
         return .result(value: "No machine configured")
     }
 }
+
+@AppIntent(schema: .system.open)
+struct OpenToolsScreenIntent: OpenIntent {
+    var target: ToolsScreenEntity
+
+    func perform() async throws -> some IntentResult {
+        NotificationCenter.default.post(name: .openToolsScreen, object: target.id)
+        return .result()
+    }
+}
+
+@AppIntent(schema: .system.search)
+struct SearchToolsIntent: ShowInAppSearchResultsIntent {
+    static var searchScopes: [String] {
+        ["Builds", "Machines"]
+    }
+
+    @Parameter(title: "Query")
+    var query: String
+
+    func perform() async throws -> some IntentResult {
+        NotificationCenter.default.post(name: .searchTools, object: query)
+        return .result()
+    }
+}
