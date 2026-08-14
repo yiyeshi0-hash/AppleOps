@@ -162,15 +162,15 @@ struct RunPresetCommandIntent: AppIntent {
 }
 
 struct MinecraftServerStatusIntent: AppIntent {
-    static var title: LocalizedStringResource { "Forge 服务器状态" }
-    static var description: IntentDescription { "查看 OPanel Forge 服务器的运行状态、TPS、内存和在线玩家。" }
+    static var title: LocalizedStringResource { "Forge Server Status" }
+    static var description: IntentDescription { "Check the OPanel Forge server status, TPS, memory, and online players." }
 
     func perform() async throws -> some IntentResult & ProvidesDialog {
         let defaults = UserDefaults.standard
         let baseURL = defaults.string(forKey: "MinecraftServerBaseURL") ?? OPanelConfig.baseURL
         let token = defaults.string(forKey: "MinecraftServerToken") ?? ""
         guard !token.isEmpty else {
-            return .result(dialog: "未配置 OPanel Token")
+            return .result(dialog: "OPanel Token is not configured")
         }
         let summary = try await MinecraftServerClient(baseURL: baseURL, token: token).statusSummary()
         return .result(dialog: IntentDialog(stringLiteral: summary))
@@ -178,42 +178,42 @@ struct MinecraftServerStatusIntent: AppIntent {
 }
 
 struct RestartMinecraftServerIntent: AppIntent {
-    static var title: LocalizedStringResource { "重启 Forge 服务器" }
-    static var description: IntentDescription { "安全重启 OPanel Forge 服务器。" }
+    static var title: LocalizedStringResource { "Restart Forge Server" }
+    static var description: IntentDescription { "Safely restart the OPanel Forge server." }
 
     func perform() async throws -> some IntentResult & ProvidesDialog {
         let defaults = UserDefaults.standard
         let baseURL = defaults.string(forKey: "MinecraftServerBaseURL") ?? OPanelConfig.baseURL
         let token = defaults.string(forKey: "MinecraftServerToken") ?? ""
         guard !token.isEmpty else {
-            return .result(dialog: "未配置 OPanel Token")
+            return .result(dialog: "OPanel Token is not configured")
         }
         let response = try await MinecraftServerClient(baseURL: baseURL, token: token).restart()
-        return .result(dialog: IntentDialog(stringLiteral: "Forge 服务器重启请求已发送：\(response)"))
+        return .result(dialog: IntentDialog(stringLiteral: "Forge server restart request sent: \(response)"))
     }
 }
 
 struct StopMinecraftServerIntent: AppIntent {
-    static var title: LocalizedStringResource { "停止 Forge 服务器" }
-    static var description: IntentDescription { "安全停止 OPanel Forge 服务器。" }
+    static var title: LocalizedStringResource { "Stop Forge Server" }
+    static var description: IntentDescription { "Safely stop the OPanel Forge server." }
 
     func perform() async throws -> some IntentResult & ProvidesDialog {
         let defaults = UserDefaults.standard
         let baseURL = defaults.string(forKey: "MinecraftServerBaseURL") ?? OPanelConfig.baseURL
         let token = defaults.string(forKey: "MinecraftServerToken") ?? ""
         guard !token.isEmpty else {
-            return .result(dialog: "未配置 OPanel Token")
+            return .result(dialog: "OPanel Token is not configured")
         }
         let response = try await MinecraftServerClient(baseURL: baseURL, token: token).stop()
-        return .result(dialog: IntentDialog(stringLiteral: "Forge 服务器停止请求已发送：\(response)"))
+        return .result(dialog: IntentDialog(stringLiteral: "Forge server stop request sent: \(response)"))
     }
 }
 
 struct SendMinecraftCommandIntent: AppIntent {
-    static var title: LocalizedStringResource { "发送 Forge 指令" }
-    static var description: IntentDescription { "向 OPanel Forge 服务器发送一条后台指令。" }
+    static var title: LocalizedStringResource { "Send Forge Command" }
+    static var description: IntentDescription { "Send a command to the OPanel Forge server." }
 
-    @Parameter(title: "指令")
+    @Parameter(title: "Command")
     var command: String
 
     func perform() async throws -> some IntentResult & ProvidesDialog {
@@ -221,10 +221,10 @@ struct SendMinecraftCommandIntent: AppIntent {
         let baseURL = defaults.string(forKey: "MinecraftServerBaseURL") ?? OPanelConfig.baseURL
         let token = defaults.string(forKey: "MinecraftServerToken") ?? ""
         guard !token.isEmpty else {
-            return .result(dialog: "未配置 OPanel Token")
+            return .result(dialog: "OPanel Token is not configured")
         }
         let response = try await MinecraftServerClient(baseURL: baseURL, token: token).send(command: command)
-        return .result(dialog: IntentDialog(stringLiteral: "已发送：\(command)，\(response)"))
+        return .result(dialog: IntentDialog(stringLiteral: "Sent command: \(command). \(response)"))
     }
 }
 
