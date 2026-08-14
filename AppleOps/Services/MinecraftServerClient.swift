@@ -194,8 +194,12 @@ struct MinecraftServerClient {
         }
         request.timeoutInterval = 15
         let (data, response) = try await session.data(for: request)
-        guard let http = response as? HTTPURLResponse, http.statusCode == 200 else {
+        guard let http = response as? HTTPURLResponse else {
             throw MinecraftServerError.invalidResponse
+        }
+        guard http.statusCode == 200 else {
+            let text = String(data: data, encoding: .utf8) ?? "HTTP \(http.statusCode)"
+            throw MinecraftServerError.serverError("OPanel \(http.statusCode): \(text)")
         }
         return data
     }
