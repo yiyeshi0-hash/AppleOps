@@ -173,7 +173,7 @@ struct MinecraftServerStatusIntent: AppIntent {
             return .result(dialog: "未配置 OPanel Token")
         }
         let summary = try await MinecraftServerClient(baseURL: baseURL, token: token).statusSummary()
-        return .result(dialog: summary)
+        return .result(dialog: IntentDialog(stringLiteral: summary))
     }
 }
 
@@ -189,7 +189,7 @@ struct RestartMinecraftServerIntent: AppIntent {
             return .result(dialog: "未配置 OPanel Token")
         }
         let response = try await MinecraftServerClient(baseURL: baseURL, token: token).restart()
-        return .result(dialog: "Forge 服务器重启请求已发送：\(response)")
+        return .result(dialog: IntentDialog(stringLiteral: "Forge 服务器重启请求已发送：\(response)"))
     }
 }
 
@@ -205,7 +205,7 @@ struct StopMinecraftServerIntent: AppIntent {
             return .result(dialog: "未配置 OPanel Token")
         }
         let response = try await MinecraftServerClient(baseURL: baseURL, token: token).stop()
-        return .result(dialog: "Forge 服务器停止请求已发送：\(response)")
+        return .result(dialog: IntentDialog(stringLiteral: "Forge 服务器停止请求已发送：\(response)"))
     }
 }
 
@@ -224,7 +224,7 @@ struct SendMinecraftCommandIntent: AppIntent {
             return .result(dialog: "未配置 OPanel Token")
         }
         let response = try await MinecraftServerClient(baseURL: baseURL, token: token).send(command: command)
-        return .result(dialog: "已发送：\(command)，\(response)")
+        return .result(dialog: IntentDialog(stringLiteral: "已发送：\(command)，\(response)"))
     }
 }
 
