@@ -8,6 +8,9 @@ struct MachinesView: View {
     @State private var newURL = ""
     @State private var command = ""
     @State private var mcCommand = ""
+    @State private var gameruleKey = ""
+    @State private var gameruleValue = ""
+    @State private var motdText = ""
     @State private var output = ""
     @State private var mcOutput = ""
     @State private var errorMessage: String?
@@ -41,6 +44,58 @@ struct MachinesView: View {
                         Text(mcOutput)
                             .font(.caption.monospaced())
                             .textSelection(.enabled)
+                    }
+                }
+
+                Section("OPanel 开放 API") {
+                    HStack {
+                        Button("指令列表") {
+                            Task { await runOPanel { try await client.serverCommands() } }
+                        }
+                        Button("最新日志") {
+                            Task { await runOPanel { try await client.latestLog() } }
+                        }
+                        Button("玩家") {
+                            Task { await runOPanel { try await client.players() } }
+                        }
+                    }
+                    HStack {
+                        Button("游戏规则") {
+                            Task { await runOPanel { try await client.gamerules() } }
+                        }
+                        Button("存档") {
+                            Task { await runOPanel { try await client.saves() } }
+                        }
+                        Button("白名单") {
+                            Task { await runOPanel { try await client.whitelist() } }
+                        }
+                    }
+                    HStack {
+                        Button("重载") {
+                            Task { await runOPanel { try await client.reload() } }
+                        }
+                        Button("属性") {
+                            Task { await runOPanel { try await client.serverProperties() } }
+                        }
+                        Button("开白名单") {
+                            Task { await runOPanel { try await client.toggleWhitelist(enabled: true) } }
+                        }
+                        Button("关白名单") {
+                            Task { await runOPanel { try await client.toggleWhitelist(enabled: false) } }
+                        }
+                    }
+                    HStack {
+                        TextField("规则名", text: $gameruleKey)
+                        TextField("值", text: $gameruleValue)
+                        Button("设置规则") {
+                            Task { await setGamerule() }
+                        }
+                    }
+                    HStack {
+                        TextField("新 MOTD", text: $motdText)
+                        Button("改 MOTD") {
+                            Task { await updateMOTD() }
+                        }
                     }
                 }
 
@@ -156,5 +211,36 @@ struct MachinesView: View {
         } catch {
             mcOutput = error.localizedDescription
         }
+    }
+
+    private var client: MinecraftServerClient {
+        MinecraftServerClient(baseURL: mcBaseURL, token: mcToken)
+    }
+
+    private func runOPanel(_ operation: () async throws -> String) async {
+        do {
+            mcOutput = try await operation()
+        } catch {
+            mcOutput = error.localizedDescription
+        }
+    }
+
+    private func setGamerule() async {
+        let key = gameruleKey.trimmingCharacters(in: .whitespacesAndNewlines)
+        let value = gameruleValue.trimmingCharacters(in: .whitespacesAndNewlines)
+        guard !key.isEmpty, !value.isEmpty else {
+            mcOutput = "请填写规则名和值"
+            return
+        }
+        await runOPanel { try await client.setGamerule(key: key, value: value) }
+    }
+
+    private func updateMOTD() async {
+        let motd = motdText.trimmingCharacters(in: .whitespacesAndNewlines)
+        guard !motd.isEmpty else {
+            mcOutput = "请填写 MOTD"
+            return
+        }
+        await runOPanel { try await client.setMOTD(motd) }
     }
 }
