@@ -5,3 +5,5 @@ build/
 *.xcuserstate
 xcuserdata/
 repo-payload.json
+build-fail*.log
+outputs/

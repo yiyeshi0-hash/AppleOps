@@ -84,6 +84,42 @@ struct AppleOpsShortcuts: AppShortcutsProvider {
                 "Execute \(.applicationName) preset command"
             ]
         )
+        AppShortcut(
+            intent: MinecraftServerStatusIntent(),
+            phrases: [
+                "查看 \(.applicationName) Forge 服务器状态",
+                "查看 \(.applicationName) 模组服务器状态",
+                "Check \(.applicationName) Forge server status",
+                "Check \(.applicationName) Forge server"
+            ]
+        )
+        AppShortcut(
+            intent: RestartMinecraftServerIntent(),
+            phrases: [
+                "重启 \(.applicationName) Forge 服务器",
+                "重启 \(.applicationName) 模组服务器",
+                "Restart \(.applicationName) Forge server",
+                "Restart \(.applicationName) Forge"
+            ]
+        )
+        AppShortcut(
+            intent: StopMinecraftServerIntent(),
+            phrases: [
+                "停止 \(.applicationName) Forge 服务器",
+                "停止 \(.applicationName) 模组服务器",
+                "Stop \(.applicationName) Forge server",
+                "Stop \(.applicationName) Forge"
+            ]
+        )
+        AppShortcut(
+            intent: SendMinecraftCommandIntent(),
+            phrases: [
+                "给 \(.applicationName) Forge 服务器发送指令",
+                "给 \(.applicationName) 模组服务器发送指令",
+                "Send \(.applicationName) Forge server command",
+                "Run \(.applicationName) Forge server command"
+            ]
+        )
     }
 }
 
