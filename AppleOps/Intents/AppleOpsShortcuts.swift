@@ -13,15 +13,6 @@ struct AppleOpsShortcuts: AppShortcutsProvider {
             ]
         )
         AppShortcut(
-            intent: CheckBuildStatusIntent(),
-            phrases: [
-                "查看 \(.applicationName) 构建状态",
-                "检查 \(.applicationName) 构建",
-                "Check \(.applicationName) build status",
-                "Check \(.applicationName) builds"
-            ]
-        )
-        AppShortcut(
             intent: CheckWDAStatusIntent(),
             phrases: [
                 "查看 \(.applicationName) WDA 状态",
@@ -64,24 +55,6 @@ struct AppleOpsShortcuts: AppShortcutsProvider {
                 "检查 \(.applicationName) 签名和设备",
                 "Check \(.applicationName) signing status",
                 "Check \(.applicationName) signing and devices"
-            ]
-        )
-        AppShortcut(
-            intent: CheckFirstMachineStatusIntent(),
-            phrases: [
-                "查看 \(.applicationName) 默认机器状态",
-                "检查 \(.applicationName) 第一台机器",
-                "Check \(.applicationName) default machine status",
-                "Check \(.applicationName) first machine"
-            ]
-        )
-        AppShortcut(
-            intent: RunPresetCommandIntent(),
-            phrases: [
-                "运行 \(.applicationName) 预设命令",
-                "执行 \(.applicationName) 预设命令",
-                "Run \(.applicationName) preset command",
-                "Execute \(.applicationName) preset command"
             ]
         )
         AppShortcut(
